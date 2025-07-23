@@ -24,12 +24,6 @@
   gap: 20px;
 }
 
-.rightSection {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  margin-left: auto;
-}
 
 .logo {
   flex-shrink: 0;
@@ -44,18 +38,14 @@
 .searchBar {
   display: flex;
   align-items: center;
-  max-width: 500px;
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  max-width: 350px;
+  margin-left: 0; /* Remove margem extra */
 }
 
 .searchInput {
   padding: 8px 12px;
   border: none;
   border-radius: 5px;
-  flex-grow: 1;
   font-size: 12px;
   outline: none;
 }
@@ -80,33 +70,10 @@
 .rightSection {
   display: flex;
   align-items: center;
-  gap: 30px;
-}
-/*
-.menuItems {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  gap: 30px; 
+  gap: 16px;      /* Espaço entre login e busca */
+  margin-left: auto; /* Empurra tudo para a direita */
 }
 
-.navLink {
-  color: var(--color-text-white);
-  text-decoration: none;
-  font-size: 16px;
-  padding: 5px 0;
-  transition: color 0.3s ease;
-  display: flex;
-  align-items: center;
-}
-
-.navLink:hover {
-  color: #ddd;
-}
-*/
 .cartLink {
   flex-shrink: 0;
 }
@@ -120,4 +87,38 @@
 
 .cartIcon:hover {
   color: var(--color-text-white);
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 16px;      /* Espaço entre busca e login */
+  margin-left: auto;
+}
+
+.userIconButton {
+  display: flex;
+  align-items: center;
+  margin-left: 0;      /* Remove margem à esquerda */
+  margin-right: 0;     /* Remove margem à direita */
+  cursor: pointer;
+}
+
+.userImage {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: filter 0.2s, transform 0.2s;
+}
+
+.userIconButton:hover .userImage {
+  filter: brightness(0.85);
+  transform: scale(1.05);
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
 }
