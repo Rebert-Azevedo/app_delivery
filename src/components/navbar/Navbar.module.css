@@ -24,7 +24,6 @@
   gap: 20px;
 }
 
-
 .logo {
   flex-shrink: 0;
   margin-right: 100px;
@@ -39,7 +38,7 @@
   display: flex;
   align-items: center;
   max-width: 350px;
-  margin-left: 0; /* Remove margem extra */
+  margin-left: 0;
 }
 
 .searchInput {
@@ -63,6 +62,25 @@
   justify-content: center;
 }
 
+.userIconButton {
+  display: flex;
+  align-items: center;
+  margin-left: 0;
+  margin-right: 0;
+  cursor: pointer;
+  background: var(--color-primary-orange);
+  border: none;
+  border-radius: 50%;
+  padding: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: background 0.2s, transform 0.2s;
+}
+
+.userIconButton:hover {
+  background: #ff8c42;
+  transform: scale(1.07);
+}
+
 .searchButton i {
   font-size: 12px;
 }
@@ -70,8 +88,8 @@
 .rightSection {
   display: flex;
   align-items: center;
-  gap: 16px;      /* Espaço entre login e busca */
-  margin-left: auto; /* Empurra tudo para a direita */
+  gap: 16px;
+  margin-left: auto;
 }
 
 .cartLink {
@@ -92,15 +110,15 @@
 .rightSection {
   display: flex;
   align-items: center;
-  gap: 16px;      /* Espaço entre busca e login */
+  gap: 16px;
   margin-left: auto;
 }
 
 .userIconButton {
   display: flex;
   align-items: center;
-  margin-left: 0;      /* Remove margem à esquerda */
-  margin-right: 0;     /* Remove margem à direita */
+  margin-left: 0;
+  margin-right: 0;
   cursor: pointer;
 }
 

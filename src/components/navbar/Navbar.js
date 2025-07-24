@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import { useState } from "react";
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -12,6 +13,10 @@ const Navbar = () => {
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     console.log("Pesquisar por:", searchTerm);
+  };
+
+  const handleLoginClick = () => {
+    navigate("/Login");
   };
 
   return (
@@ -40,13 +45,17 @@ const Navbar = () => {
               <i className="fas fa-search"></i>
             </button>
           </form>
-          <Link to="/login" className={styles.userIconButton}>
+          <button
+            type="button"
+            className={styles.userIconButton}
+            onClick={handleLoginClick}
+          >
             <img
               src="./userLogo.png"
               alt="Login"
               className={styles.userImage}
             />
-          </Link>
+          </button>
         </div>
       </div>
     </nav>
