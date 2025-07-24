@@ -8,14 +8,22 @@
   --color-primary-blue: #1396d7;
   --color-secondary-blue: #49abdb;
 
+  --color-gray: #aaaaaa;
   --color-primary-gray: #555555;
   --color-secondary-gray: #6a6a6a;
-  --color-clear-gray: #aaaaaa;
 
-  --color-text-white: #ffffff;
-  --color-text-white2: #dddddd;
-  --color-text-dark: #000000;
+  --color-white: #ffffff;
+  --color-white2: #dddddd;
+  --color-black: #000000;
 
   --color-error: #eb606c;
   --color-success: #66cc99;
+
+  --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.15);
+  --gradient-bg: linear-gradient(
+    135deg,
+    var(--color-white),
+    var(--color-white2)
+  );
 }

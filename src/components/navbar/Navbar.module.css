@@ -2,7 +2,7 @@
   background-color: var(--color-primary-orange);
   height: 70px;
   padding: 0;
-  color: var(--color-text-white);
+  color: var(--color-white);
   display: flex;
   justify-content: flex-start;
   width: 100%;
@@ -51,7 +51,7 @@
 
 .searchButton {
   background-color: var(--color-primary-gray);
-  color: var(--color-text-white);
+  color: var(--color-white);
   border: none;
   padding: 8px 12px;
   border-radius: 5px;
@@ -97,14 +97,14 @@
 }
 
 .cartIcon {
-  color: var(--color-text-white);
+  color: var(--color-white);
   font-size: 24px;
   cursor: pointer;
   transition: color 0.3s ease;
 }
 
 .cartIcon:hover {
-  color: var(--color-text-white);
+  color: var(--color-white);
 }
 
 .rightSection {

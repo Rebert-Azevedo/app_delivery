@@ -7,6 +7,7 @@ const api = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL || "http://192.168.0.134:8081",
   headers: {
     "Content-Type": "application/json",
+    TOKEN: TOKEN,
   },
 });
 
@@ -56,7 +57,7 @@ export function useAuth() {
     setError(null);
     try {
       const response = await api.post("/login", {
-        dataRows: [{ numero, senha }],
+        dataRows: { numero, senha },
       });
 
       if (response.data && response.data.error) {

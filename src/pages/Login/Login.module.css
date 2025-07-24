@@ -1,0 +1,107 @@
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--gradient-bg);
+  padding: 20px;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  color: var(--color-primary-gray);
+}
+
+.loginContainer h2 {
+  color: var(--color-black);
+  margin-bottom: 30px;
+  font-size: 2.8em;
+  text-align: center;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.loginForm {
+  background-color: var(--color-white);
+  padding: 40px 50px;
+  border-radius: 15px;
+  box-shadow: var(--shadow-medium);
+  max-width: 450px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  border: 1px solid var(--color-white2);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  margin-bottom: 10px;
+  color: var(--color-primary-gray);
+  font-size: 1.05em;
+  font-weight: 600;
+}
+
+.inputField {
+  padding: 14px 18px;
+  border: 1px solid var(--color-gray);
+  border-radius: 10px;
+  font-size: 1.05em;
+  color: var(--color-primary-gray);
+  background-color: var(--color-white2);
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
+}
+
+.inputField:focus {
+  border-color: var(--color-primary-blue);
+  box-shadow: 0 0 0 4px rgba(19, 150, 215, 0.25);
+  background-color: var(--color-white);
+  outline: none;
+}
+
+.submitButton {
+  background-color: var(--color-primary-orange);
+  color: var(--color-white);
+  padding: 16px 25px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.15s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+  margin-top: 15px;
+  box-shadow: 0 5px 15px rgba(var(--color-primary-orange-rgb), 0.25);
+  letter-spacing: 0.05em;
+}
+
+.submitButton:hover {
+  background-color: var(--color-secondary-orange);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(var(--color-secondary-orange-rgb), 0.35);
+}
+
+.submitButton:disabled {
+  background-color: var(--color-gray);
+  color: var(--color-white2);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.errorMessage {
+  color: var(--color-error);
+  text-align: center;
+  margin-top: 25px;
+  font-size: 1.05em;
+  font-weight: 600;
+  background-color: rgba(235, 96, 108, 0.1);
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid var(--color-error);
+}
