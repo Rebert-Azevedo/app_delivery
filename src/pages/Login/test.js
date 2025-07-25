@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../../hooks/useAuthHook";
 import styles from "./Login.module.css";
 
@@ -23,7 +23,7 @@ const formatPhoneNumber = (value) => {
   return formattedValue;
 };
 
-function LoginForm({ toggleView, login, loading, error }) {
+function LoginForm({ toggleView, login, loading, error, showMessage }) {
   const [numero, setNumero] = useState("");
   const [senha, setSenha] = useState("");
 
@@ -36,14 +36,14 @@ function LoginForm({ toggleView, login, loading, error }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     if (numero.replace(/\D/g, "").length !== 11) {
-      console.error("Por favor, digite os 11 d gitos do telefone.");
+      showMessage("Por favor, digite os 11 dígitos do telefone.", "error");
       return;
     }
     const success = await login(numero.replace(/\D/g, ""), senha);
     if (success) {
-      console.log("Login bem-sucedido!");
+      showMessage("Login bem-sucedido!", "success");
     } else {
-      console.error("Falha no login. Verifique a mensagem de erro acima.");
+      showMessage(error, "error");
     }
   };
 
@@ -54,7 +54,7 @@ function LoginForm({ toggleView, login, loading, error }) {
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <div className={styles.formGroup}>
-          <label htmlFor="login-numero">N mero:</label>
+          <label htmlFor="login-numero">Número:</label>
           <input
             type="text"
             id="login-numero"
@@ -88,7 +88,6 @@ function LoginForm({ toggleView, login, loading, error }) {
           {loading ? "Entrando..." : "Entrar"}
         </button>
       </form>
-      {error && <p className={styles.errorMessage}>{error}</p>}
       <button
         type="button"
         className={styles.secondaryButton}
@@ -100,7 +99,7 @@ function LoginForm({ toggleView, login, loading, error }) {
   );
 }
 
-function CreateUserForm({ toggleView, register, loading, error }) {
+function CreateUserForm({ toggleView, register, loading, error, showMessage }) {
   const [nm_cliente, setNm_cliente] = useState("");
   const [numero, setNumero] = useState("");
   const [senha, setSenha] = useState("");
@@ -114,7 +113,7 @@ function CreateUserForm({ toggleView, register, loading, error }) {
   const handleCreateUser = async (e) => {
     e.preventDefault();
     if (numero.replace(/\D/g, "").length !== 11) {
-      console.error("Por favor, digite os 11 dÍgitos do telefone.");
+      showMessage("Por favor, digite os 11 dígitos do telefone.", "error");
       return;
     }
     const success = await register(
@@ -123,12 +122,10 @@ function CreateUserForm({ toggleView, register, loading, error }) {
       senha
     );
     if (success) {
-      console.log("Usuário criado com sucesso!");
+      showMessage("Usuário criado com sucesso!", "success");
       toggleView();
     } else {
-      console.error(
-        "Falha ao criar usuário. Verifique a mensagem de erro acima."
-      );
+      showMessage(error, "error");
     }
   };
 
@@ -150,7 +147,7 @@ function CreateUserForm({ toggleView, register, loading, error }) {
           />
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="create-numero">N mero:</label>
+          <label htmlFor="create-numero">Número:</label>
           <input
             placeholder="(00)00000-0000"
             type="text"
@@ -184,7 +181,6 @@ function CreateUserForm({ toggleView, register, loading, error }) {
           {loading ? "Criando..." : "Criar Conta"}
         </button>
       </form>
-      {error && <p className={styles.errorMessage}>{error}</p>}
       <button
         type="button"
         className={styles.secondaryButton}
@@ -199,19 +195,55 @@ function CreateUserForm({ toggleView, register, loading, error }) {
 function App() {
   const [isLoginView, setIsLoginView] = useState(true);
   const { login, register, loading, error } = useAuth();
+  const [message, setMessage] = useState(null);
+  const [messageType, setMessageType] = useState(null);
 
   const toggleView = () => {
     setIsLoginView(!isLoginView);
+    setMessage(null);
+    setMessageType(null);
   };
+
+  const showMessage = useCallback((msg, type) => {
+    setMessage(msg);
+    setMessageType(type);
+    const timer = setTimeout(() => {
+      setMessage(null);
+      setMessageType(null);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    let timerCleanup;
+    if (error) {
+      timerCleanup = showMessage(error, "error");
+    }
+    return () => {
+      if (timerCleanup) {
+        timerCleanup();
+      }
+    };
+  }, [error, showMessage]);
 
   return (
     <div className={styles.loginContainer}>
+      {message && (
+        <div
+          className={`${styles.tempMessage} ${
+            messageType === "success" ? styles.successMessage : styles.errorMessage
+          }`}
+        >
+          {message}
+        </div>
+      )}
       {isLoginView ? (
         <LoginForm
           toggleView={toggleView}
           login={login}
           loading={loading}
           error={error}
+          showMessage={showMessage}
         />
       ) : (
         <CreateUserForm
@@ -219,6 +251,7 @@ function App() {
           register={register}
           loading={loading}
           error={error}
+          showMessage={showMessage}
         />
       )}
     </div>
