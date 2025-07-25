@@ -11,7 +11,7 @@
   color: var(--color-primary-gray);
 }
 
-.loginContainer h2 {
+.loginForm h2 {
   color: var(--color-black);
   margin-bottom: 30px;
   font-size: 2.8em;
@@ -23,14 +23,14 @@
 
 .loginForm {
   background-color: var(--color-white);
-  padding: 40px 50px;
+  padding: 50px 50px;
   border-radius: 15px;
   box-shadow: var(--shadow-medium);
-  max-width: 450px;
+  max-width: 400px;
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 20px;
   border: 1px solid var(--color-white2);
 }
 
@@ -44,6 +44,16 @@
   color: var(--color-primary-gray);
   font-size: 1.05em;
   font-weight: 600;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  appearance: textfield;
 }
 
 .inputField {
@@ -62,6 +72,12 @@
   box-shadow: 0 0 0 4px rgba(19, 150, 215, 0.25);
   background-color: var(--color-white);
   outline: none;
+}
+
+.submitButton,
+.secondaryButton {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .submitButton {
@@ -89,6 +105,37 @@
 .submitButton:disabled {
   background-color: var(--color-gray);
   color: var(--color-white2);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.secondaryButton {
+  background-color: transparent;
+  color: var(--color-primary-blue);
+  padding: 14px 20px;
+  border: 2px solid var(--color-primary-blue);
+  border-radius: 10px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out,
+    transform 0.15s ease-in-out, border-color 0.3s ease-in-out;
+  margin-top: 15px;
+  box-shadow: 0 3px 10px rgba(var(--color-primary-blue-rgb), 0.1);
+}
+
+.secondaryButton:hover {
+  background-color: var(--color-primary-blue);
+  color: var(--color-white);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(var(--color-primary-blue-rgb), 0.2);
+}
+
+.secondaryButton:disabled {
+  background-color: var(--color-white2);
+  color: var(--color-gray);
+  border-color: var(--color-gray);
   cursor: not-allowed;
   transform: none;
   box-shadow: none;

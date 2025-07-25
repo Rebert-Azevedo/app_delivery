@@ -26,4 +26,8 @@
     var(--color-white),
     var(--color-white2)
   );
+
+  --color-primary-orange-rgb: 215, 84, 19;
+  --color-secondary-orange-rgb: 219, 122, 73;
+  --color-primary-blue-rgb: 19, 150, 215;
 }

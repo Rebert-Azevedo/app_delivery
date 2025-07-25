@@ -82,10 +82,34 @@ export function useAuth() {
     }
   };
 
+  const register = async (nm_cliente, numero, senha) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await api.post("/importData/login", {
+        dataRows: { nm_cliente, numero, senha },
+      });
+
+      if (response.data && response.data.error) {
+        throw new Error(response.data.error);
+      }
+
+      return true;
+    } catch (err) {
+      const errorMessage = err.response
+        ? err.response.data.error || err.response.statusText
+        : err.message;
+      setError(errorMessage);
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const logout = () => {
     setUser(null);
     localStorage.removeItem("currentUser");
   };
 
-  return { user, login, logout, loading, error, api };
+  return { user, login, logout, register, loading, error, api };
 }
