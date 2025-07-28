@@ -1,10 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useCallback } from "react";
 import axios from "axios";
+import { useAuthContext } from "../context/AuthContext";
 
 const TOKEN = process.env.REACT_APP_TOKEN;
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "http://192.168.0.134:8081";
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL || "http://192.168.0.134:8081",
+  baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
     TOKEN: TOKEN,
@@ -40,56 +43,63 @@ api.interceptors.response.use(
   }
 );
 
-export function useAuth() {
-  const [user, setUser] = useState(null);
+export const useAuth = () => {
+  const { user, setUser } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("currentUser");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
+  const login = useCallback(
+    async (numero, senha) => {
+      setLoading(true);
+      setError(null);
+      console.log("useAuth: Tentando login para o número:", numero);
+      try {
+        const response = await api.post("/login", {
+          dataRows: { numero, senha },
+        });
 
-  const login = async (numero, senha) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await api.post("/login", {
-        dataRows: { numero, senha },
-      });
+        console.log("useAuth: Resposta da API de login:", response.data);
 
-      if (response.data && response.data.error) {
-        throw new Error(response.data.error);
+        if (response.data && response.data.error) {
+          throw new Error(response.data.error);
+        }
+
+        const userData = response.data;
+        setUser(userData);
+        console.log("useAuth: setUser chamado com sucesso. Usuário:", userData);
+        return true;
+      } catch (err) {
+        const errorMessage = err.response
+          ? err.response.data.error ||
+            err.response.statusText ||
+            "Erro desconhecido da API."
+          : err.message || "Erro de rede ou conexão.";
+        setError(errorMessage);
+        setUser(null);
+        console.error("useAuth: Erro no login:", errorMessage, err);
+        return false;
+      } finally {
+        setLoading(false);
       }
+    },
+    [setUser]
+  );
 
-      const userData = response.data;
-      setUser(userData);
-      localStorage.setItem("currentUser", JSON.stringify(userData));
-
-      return true;
-    } catch (err) {
-      const errorMessage = err.response
-        ? err.response.data.error || err.response.statusText
-        : err.message;
-      setError(errorMessage);
-      setUser(null);
-      localStorage.removeItem("currentUser");
-      return false;
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const register = async (nm_cliente, numero, senha) => {
+  const register = useCallback(async (nm_cliente, numero, senha) => {
     setLoading(true);
     setError(null);
+    console.log(
+      "useAuth: Tentando registrar novo usuário:",
+      nm_cliente,
+      numero
+    );
     try {
       const response = await api.post("/importData/login", {
         dataRows: { nm_cliente, numero, senha },
       });
 
+      console.log("useAuth: Resposta da API de registro:", response.data);
+
       if (response.data && response.data.error) {
         throw new Error(response.data.error);
       }
@@ -97,19 +107,22 @@ export function useAuth() {
       return true;
     } catch (err) {
       const errorMessage = err.response
-        ? err.response.data.error || err.response.statusText
-        : err.message;
+        ? err.response.data.error ||
+          err.response.statusText ||
+          "Erro desconhecido da API."
+        : err.message || "Erro de rede ou conexão.";
       setError(errorMessage);
+      console.error("useAuth: Erro no registro:", errorMessage, err);
       return false;
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setUser(null);
-    localStorage.removeItem("currentUser");
-  };
+    console.log("useAuth: Logout realizado. Usuário definido como null.");
+  }, [setUser]);
 
-  return { user, login, logout, register, loading, error, api };
-}
+  return { user, loading, error, login, register, logout };
+};

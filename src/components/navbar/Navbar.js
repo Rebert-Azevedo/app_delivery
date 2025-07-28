@@ -1,10 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import { useState } from "react";
+import { useAuth } from "../../hooks/useAuthHook";
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -16,7 +18,12 @@ const Navbar = () => {
   };
 
   const handleLoginClick = () => {
-    navigate("/Login");
+    navigate("/login");
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
   };
 
   return (
@@ -33,6 +40,7 @@ const Navbar = () => {
         </div>
         <div className={styles.rightSection}>
           <form className={styles.searchBar} onSubmit={handleSearchSubmit}>
+            {/*<FaSearch className={styles.searchIcon}/>*/}
             <input
               type="text"
               placeholder="Pesquisar..."
@@ -55,6 +63,14 @@ const Navbar = () => {
               alt="Login"
               className={styles.userImage}
             />
+          </button>
+
+          <button
+            type="button"
+            className={styles.logoutButton}
+            onClick={handleLogout}
+          >
+            Sair
           </button>
         </div>
       </div>

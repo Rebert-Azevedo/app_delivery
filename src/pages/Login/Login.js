@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../../hooks/useAuthHook";
+import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 
 const formatPhoneNumber = (value) => {
@@ -23,7 +24,20 @@ const formatPhoneNumber = (value) => {
   return formattedValue;
 };
 
-function LoginForm({ toggleView, login, loading, error }) {
+function ToastMessage({ message, type }) {
+  return (
+    <div className={`${styles.toastMessage} ${styles[type]}`}>{message}</div>
+  );
+}
+
+function LoginForm({
+  toggleView,
+  login,
+  loading,
+  error,
+  showTemporaryMessage,
+  onLoginSuccess,
+}) {
   const [numero, setNumero] = useState("");
   const [senha, setSenha] = useState("");
 
@@ -36,14 +50,23 @@ function LoginForm({ toggleView, login, loading, error }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     if (numero.replace(/\D/g, "").length !== 11) {
-      console.error("Por favor, digite os 11 d gitos do telefone.");
+      showTemporaryMessage(
+        "Por favor, digite os 11 dígitos do telefone.",
+        "error"
+      );
       return;
     }
     const success = await login(numero.replace(/\D/g, ""), senha);
     if (success) {
-      console.log("Login bem-sucedido!");
+      showTemporaryMessage("Login bem-sucedido!", "success");
+      if (onLoginSuccess) {
+        onLoginSuccess();
+      }
     } else {
-      console.error("Falha no login. Verifique a mensagem de erro acima.");
+      showTemporaryMessage(
+        error || "Falha no login. Verifique suas credenciais.",
+        "error"
+      );
     }
   };
 
@@ -54,7 +77,7 @@ function LoginForm({ toggleView, login, loading, error }) {
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <div className={styles.formGroup}>
-          <label htmlFor="login-numero">N mero:</label>
+          <label htmlFor="login-numero">Número:</label>
           <input
             type="text"
             id="login-numero"
@@ -88,7 +111,6 @@ function LoginForm({ toggleView, login, loading, error }) {
           {loading ? "Entrando..." : "Entrar"}
         </button>
       </form>
-      {error && <p className={styles.errorMessage}>{error}</p>}
       <button
         type="button"
         className={styles.secondaryButton}
@@ -100,7 +122,13 @@ function LoginForm({ toggleView, login, loading, error }) {
   );
 }
 
-function CreateUserForm({ toggleView, register, loading, error }) {
+function CreateUserForm({
+  toggleView,
+  register,
+  loading,
+  error,
+  showTemporaryMessage,
+}) {
   const [nm_cliente, setNm_cliente] = useState("");
   const [numero, setNumero] = useState("");
   const [senha, setSenha] = useState("");
@@ -114,7 +142,10 @@ function CreateUserForm({ toggleView, register, loading, error }) {
   const handleCreateUser = async (e) => {
     e.preventDefault();
     if (numero.replace(/\D/g, "").length !== 11) {
-      console.error("Por favor, digite os 11 dÍgitos do telefone.");
+      showTemporaryMessage(
+        "Por favor, digite os 11 dígitos do telefone.",
+        "error"
+      );
       return;
     }
     const success = await register(
@@ -123,11 +154,12 @@ function CreateUserForm({ toggleView, register, loading, error }) {
       senha
     );
     if (success) {
-      console.log("Usuário criado com sucesso!");
+      showTemporaryMessage("Usuário criado com sucesso!", "success");
       toggleView();
     } else {
-      console.error(
-        "Falha ao criar usuário. Verifique a mensagem de erro acima."
+      showTemporaryMessage(
+        error || "Falha ao criar usuário. Tente novamente.",
+        "error"
       );
     }
   };
@@ -150,7 +182,7 @@ function CreateUserForm({ toggleView, register, loading, error }) {
           />
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="create-numero">N mero:</label>
+          <label htmlFor="create-numero">Número:</label>
           <input
             placeholder="(00)00000-0000"
             type="text"
@@ -184,7 +216,6 @@ function CreateUserForm({ toggleView, register, loading, error }) {
           {loading ? "Criando..." : "Criar Conta"}
         </button>
       </form>
-      {error && <p className={styles.errorMessage}>{error}</p>}
       <button
         type="button"
         className={styles.secondaryButton}
@@ -196,22 +227,47 @@ function CreateUserForm({ toggleView, register, loading, error }) {
   );
 }
 
-function App() {
+function LoginPage() {
   const [isLoginView, setIsLoginView] = useState(true);
   const { login, register, loading, error } = useAuth();
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("");
+  const [showToast, setShowToast] = useState(false);
+  const navigate = useNavigate();
 
   const toggleView = () => {
     setIsLoginView(!isLoginView);
   };
 
+  const showTemporaryMessage = (message, type) => {
+    setToastMessage(message);
+    setToastType(type);
+    setShowToast(true);
+    setTimeout(() => {
+      setShowToast(false);
+      setToastMessage("");
+      setToastType("");
+    }, 3000);
+  };
+
+  const handleLoginSuccess = () => {
+    console.log(
+      "LoginPage: Login bem-sucedido, redirecionando para /dashboard."
+    );
+    navigate("/dashboard");
+  };
+
   return (
     <div className={styles.loginContainer}>
+      {showToast && <ToastMessage message={toastMessage} type={toastType} />}
       {isLoginView ? (
         <LoginForm
           toggleView={toggleView}
           login={login}
           loading={loading}
           error={error}
+          showTemporaryMessage={showTemporaryMessage}
+          onLoginSuccess={handleLoginSuccess}
         />
       ) : (
         <CreateUserForm
@@ -219,10 +275,11 @@ function App() {
           register={register}
           loading={loading}
           error={error}
+          showTemporaryMessage={showTemporaryMessage}
         />
       )}
     </div>
   );
 }
 
-export default App;
+export default LoginPage;
