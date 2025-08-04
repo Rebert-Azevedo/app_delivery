@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 import { useAuthContext } from "./context/AuthContext";
+import CadastroCategoria from "./pages/Dashboard/CadastroCategoria/CadastroCategoria";
 
 function App() {
   return (
@@ -46,6 +47,15 @@ function AppContent() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/dashboard/CadastroCategoria"
+          element={
+            <ProtectedRoute>
+              <CadastroCategoria />
             </ProtectedRoute>
           }
         />
