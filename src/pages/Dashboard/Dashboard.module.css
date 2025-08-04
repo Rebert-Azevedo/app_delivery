@@ -1,11 +1,9 @@
-/* Geral */
 .dashboardContainer {
   display: flex;
   min-height: calc(100vh - 64px - 50px);
   background-color: var(--color-white2);
 }
 
-/* Sidebar */
 .sideBar {
   background-color: var(--color-white);
   padding: 1.5rem 1rem;
@@ -58,14 +56,12 @@
   font-size: 1.2rem;
 }
 
-/* Conteúdo Principal */
 .content {
   padding: 2rem;
   flex: 1;
   background-color: var(--color-white2);
 }
 
-/* Utilitários - Cartão para conteúdo */
 .card {
   background-color: var(--color-white);
   padding: 2rem;
