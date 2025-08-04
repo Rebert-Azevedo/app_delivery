@@ -1,0 +1,242 @@
+/* Container principal */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: calc(100vh - 64px - 50px);
+  background-color: var(--color-white2);
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Cartão para o formulário */
+.card {
+  background-color: var(--color-white);
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow-light);
+  width: 100%;
+  max-width: 40rem;
+  margin-bottom: 2rem;
+}
+
+/* Títulos */
+.heading {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--color-primary-orange);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.70rem;
+}
+
+.description {
+  color: var(--color-secondary-gray);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Formulário */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; 
+  width: 100%;
+  max-width: 40rem;
+}
+
+.formGroup {
+  margin-bottom: 0;
+}
+
+.label {
+  display: block;
+  color: var(--color-primary-gray);
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.inputField,
+.textareaField {
+  width: 95%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-gray);
+  border-radius: 0.5rem;
+  outline: none;
+  background-color: var(--color-white);
+  color: var(--color-primary-gray);
+  transition: all 0.3s ease;
+}
+
+.inputField:focus,
+.textareaField:focus {
+  border-color: var(--color-primary-blue);
+  box-shadow: 0 0 0 2px rgba(var(--color-primary-blue-rgb), 0.5);
+}
+
+.errorMessage {
+  color: var(--color-error);
+  font-size: 0.875rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Botões */
+.submitButton {
+  width: 100%;
+  background-color: var(--color-primary-green);
+  color: var(--color-white);
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background-color: var(--color-secondary-green);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.submitButton:disabled {
+  background-color: var(--color-gray);
+  cursor: not-allowed;
+}
+
+.cancelButton {
+  background-color: var(--color-primary-orange);
+  margin-top: 0.5rem;
+}
+
+.cancelButton:hover {
+  background-color: var(--color-secondary-orange);
+}
+
+/* Mensagens de notificação (Toast) */
+.toastMessage {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow-medium);
+  color: var(--color-white);
+  font-weight: 700;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.toastMessage.success {
+  background-color: var(--color-success);
+}
+
+.toastMessage.error {
+  background-color: var(--color-error);
+}
+
+/* Divisor */
+.divider {
+  width: 80%;
+  max-width: 40rem;
+  border: 0;
+  height: 1px;
+  background-color: var(--color-gray);
+  margin: 2rem 0;
+}
+
+/* Lista de Categorias */
+.categoriaList {
+  width: 100%;
+  max-width: 40rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.categoriaItem {
+  background-color: var(--color-white);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.categoriaItem:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+.categoriaInfo p {
+  margin: 0;
+  color: var(--color-primary-gray);
+}
+
+.categoriaInfo strong {
+  color: var(--color-secondary-orange);
+}
+
+.categoriaActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.actionButton {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.editButton {
+  background-color: var(--color-primary-blue);
+}
+
+.editButton:hover {
+  background-color: var(--color-secondary-blue);
+  box-shadow: 0 4px 10px rgba(var(--color-primary-blue-rgb), 0.3);
+}
+
+.deleteButton {
+  background-color: var(--color-error);
+}
+
+.deleteButton:hover {
+  background-color: var(--color-error);
+  filter: brightness(0.9);
+  box-shadow: 0 4px 10px rgba(var(--color-error), 0.3);
+}
+
+.noItemsMessage {
+  text-align: center;
+  color: var(--color-secondary-gray);
+  padding: 1rem;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 1rem;
+  color: var(--color-primary-gray);
+}
+
+.error {
+  color: var(--color-error);
+}
