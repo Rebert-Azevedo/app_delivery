@@ -72,8 +72,8 @@ const CadastroCategoria = () => {
     e.preventDefault();
 
     if (
-      !formData.dataRows.CD_CATEGORIA.trim() ||
-      !formData.dataRows.NM_CATEGORIA.trim()
+      !String(formData.dataRows.CD_CATEGORIA).trim() ||
+      !String(formData.dataRows.NM_CATEGORIA).trim()
     ) {
       showTemporaryMessage(
         "Código e nome da categoria são obrigatórios.",
@@ -113,7 +113,7 @@ const CadastroCategoria = () => {
   };
 
   const handleEdit = (categoria) => {
-    setEditingCategoriaId(categoria.id);
+    setEditingCategoriaId(categoria.ID_CATEGORIA);
     setFormData({
       dataRows: {
         CD_CATEGORIA: categoria.CD_CATEGORIA,
