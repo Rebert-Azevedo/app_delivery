@@ -5,16 +5,16 @@ export const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     try {
-      const storedUser = localStorage.getItem("user");
+      const storedUser = sessionStorage.getItem("user");
       const parsedUser = storedUser ? JSON.parse(storedUser) : null;
       console.log(
-        "AuthContext: Inicializando usuário do localStorage:",
+        "AuthContext: Inicializando usuário do sessionStorage:",
         parsedUser
       );
       return parsedUser;
     } catch (error) {
       console.error(
-        "AuthContext: Falha ao analisar usuário do localStorage:",
+        "AuthContext: Falha ao analisar usuário do sessionStorage:",
         error
       );
       return null;
@@ -24,15 +24,15 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     try {
       if (user) {
-        localStorage.setItem("user", JSON.stringify(user));
-        console.log("AuthContext: Usuário salvo no localStorage:", user);
+        sessionStorage.setItem("user", JSON.stringify(user));
+        console.log("AuthContext: Usuário salvo no sessionStorage:", user);
       } else {
-        localStorage.removeItem("user");
-        console.log("AuthContext: Usuário removido do localStorage (logout).");
+        sessionStorage.removeItem("user");
+        console.log("AuthContext: Usuário removido do sessionStorage (logout).");
       }
     } catch (error) {
       console.error(
-        "AuthContext: Falha ao salvar usuário no localStorage:",
+        "AuthContext: Falha ao salvar usuário no sessionStorage:",
         error
       );
     }
