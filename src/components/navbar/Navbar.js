@@ -40,7 +40,7 @@ const Navbar = () => {
         </div>
         <div className={styles.rightSection}>
           <form className={styles.searchBar} onSubmit={handleSearchSubmit}>
-            {/*<FaSearch className={styles.searchIcon}/>*/}
+            {/*<FaSearch className={styles.searchIcon}/>
             <input
               type="text"
               placeholder="Pesquisar..."
@@ -51,7 +51,7 @@ const Navbar = () => {
             <button type="submit" className={styles.searchButton}>
               Buscar
               <i className="fas fa-search"></i>
-            </button>
+            </button>*/}
           </form>
           <button
             type="button"
