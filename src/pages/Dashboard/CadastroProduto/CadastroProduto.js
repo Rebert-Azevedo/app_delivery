@@ -72,7 +72,6 @@ const CadastroProduto = () => {
     }
   };
 
-  //Teste
   const [imagem, setImagem] = useState(null);
 
   const handleChange = (e) => {
@@ -385,6 +384,13 @@ const CadastroProduto = () => {
         ) : (
           produtos.map((produto) => (
             <div key={produto.ID_PRODUTO} className={styles.produtoItem}>
+              <div className={styles.imageContainer}>
+                <img
+                  src={produto.IMG_PRODUTO}
+                  alt={produto.NM_PRODUTO}
+                  className={styles.produtoImage}
+                />
+              </div>
               <div className={styles.produtoInfo}>
                 <p>
                   <strong>Código:</strong> {produto.CD_PRODUTO}
@@ -404,11 +410,6 @@ const CadastroProduto = () => {
                     (c) => c.ID_CATEGORIA === produto.ID_CATEGORIA
                   )?.NM_CATEGORIA || "N/A"}
                 </p>
-                <img
-                  src={produto.IMG_PRODUTO}
-                  alt={produto.NM_PRODUTO}
-                  className={styles.produtoImage}
-                />
               </div>
               <div className={styles.produtoActions}>
                 <button
