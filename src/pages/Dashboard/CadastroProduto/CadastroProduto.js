@@ -64,7 +64,12 @@ const CadastroProduto = () => {
   const loadData = async () => {
     const fetchedProdutos = await fetchProduto();
     if (fetchedProdutos) {
-      setProdutos(fetchedProdutos);
+      const sortedProdutos = fetchedProdutos.sort((a, b) => {
+        const cdA = Number(a.CD_PRODUTO) || 0;
+        const cdB = Number(b.CD_PRODUTO) || 0;
+        return cdA - cdB;
+      });
+      setProdutos(sortedProdutos);
     }
     const fetchedCategorias = await fetchCategoria();
     if (fetchedCategorias) {
